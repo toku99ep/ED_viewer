@@ -161,13 +161,22 @@ footer {
    YouTube Live 自動埋め込み
    ============================== */
 
-const channelId = "UCYO90vJnPBT2CRee-cakpVg";
-const origin = location.origin;
+// 修正前（チャンネルIDベース）
+// const channelId = "UCYO90vJnPBT2CRee-cakpVg";
+// const origin = location.origin;
+// const embedUrl =
+//   "https://www.youtube.com/embed/live_stream?channel=" +
+//   channelId +
+//   "&autoplay=1&mute=1&origin=" +
+//   origin;
 
+// 修正後（ライブIDベース）
+const liveId = "wqy2yPJjqp4";
+const origin = location.origin;
 const embedUrl =
-  "https://www.youtube.com/embed/live_stream?channel=" +
-  channelId +
-  "&autoplay=1&mute=1&origin=" +
+  "https://www.youtube.com/embed/" +
+  liveId +
+  "?autoplay=1&mute=1&origin=" +
   origin;
 
 document.getElementById("player").src = embedUrl;
