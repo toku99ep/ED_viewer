@@ -27,6 +27,37 @@ header {
   border-bottom: 1px solid #222;
 }
 
+/* ===== Live ID Control ===== */
+.live-id-control {
+  background: #1a1a1a;
+  padding: 12px 20px;
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #222;
+}
+
+.live-id-control input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  background: #222;
+  color: white;
+  border-radius: 4px;
+}
+
+.live-id-control button {
+  padding: 8px 20px;
+  border: none;
+  background: #e53935;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.live-id-control button:hover {
+  background: #d32f2f;
+}
+
 /* ===== MAIN AREA ===== */
 main {
   flex: 1;
@@ -119,6 +150,12 @@ footer {
 🌍 Earth Diver - Live Connect
 </header>
 
+<!-- ===== Live ID入力エリア ===== -->
+<div class="live-id-control">
+  <input type="text" id="liveIdInput" placeholder="Live ID を入力 (例: wqy2yPJjqp4)">
+  <button onclick="loadLive()">配信を読み込む</button>
+</div>
+
 <main>
 
   <!-- ===== LIVE VIDEO ===== -->
@@ -126,7 +163,8 @@ footer {
     <div class="video-container">
       <iframe id="player"
         allow="autoplay; encrypted-media"
-        allowfullscreen>
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
 
@@ -161,36 +199,36 @@ footer {
    YouTube Live 自動埋め込み
    ============================== */
 
-// 修正前（チャンネルIDベース）
-// const channelId = "UCYO90vJnPBT2CRee-cakpVg";
-// const origin = location.origin;
-// const embedUrl =
-//   "https://www.youtube.com/embed/live_stream?channel=" +
-//   channelId +
-//   "&autoplay=1&mute=1&origin=" +
-//   origin;
+// デフォルトLive ID
+const defaultLiveId = "wqy2yPJjqp4";
 
-// 修正後（ライブIDベース）
-// const liveId = "wqy2yPJjqp4";
-// const origin = location.origin;
-// const embedUrl =
-//   "https://www.youtube.com/embed/" +
-//   liveId +
-//   "?autoplay=1&mute=1&origin=" +
-//   origin;
+// 初期読み込み
+window.onload = function() {
+  const params = new URLSearchParams(window.location.search);
+  const liveId = params.get('live') || defaultLiveId;
+  
+  document.getElementById("liveIdInput").value = liveId;
+  loadLiveById(liveId);
+};
 
-// document.getElementById("player").src = embedUrl;
+// Live ID指定で読み込み
+function loadLive() {
+  const input = document.getElementById("liveIdInput");
+  const liveId = input.value.trim() || defaultLiveId;
+  loadLiveById(liveId);
+}
+
+// 実際の埋め込み処理
+function loadLiveById(liveId) {
+  const embedUrl =
+    "https://www.youtube.com/embed/" +
+    liveId +
+    "?autoplay=1&mute=1";
+  
+  document.getElementById("player").src = embedUrl;
+}
 
 
-const liveId = "wqy2yPJjqp4";
-
-// originパラメータを削除
-const embedUrl =
-  "https://www.youtube.com/embed/" +
-  liveId +
-  "?autoplay=1&mute=1";
-
-document.getElementById("player").src = embedUrl;
 /* ==============================
    仮チャット（ローカルUIのみ）
    ============================== */
