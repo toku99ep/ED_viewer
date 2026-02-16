@@ -171,17 +171,26 @@ footer {
 //   origin;
 
 // 修正後（ライブIDベース）
+// const liveId = "wqy2yPJjqp4";
+// const origin = location.origin;
+// const embedUrl =
+//   "https://www.youtube.com/embed/" +
+//   liveId +
+//   "?autoplay=1&mute=1&origin=" +
+//   origin;
+
+// document.getElementById("player").src = embedUrl;
+
+
 const liveId = "wqy2yPJjqp4";
-const origin = location.origin;
+
+// originパラメータを削除
 const embedUrl =
   "https://www.youtube.com/embed/" +
   liveId +
-  "?autoplay=1&mute=1&origin=" +
-  origin;
+  "?autoplay=1&mute=1";
 
 document.getElementById("player").src = embedUrl;
-
-
 /* ==============================
    仮チャット（ローカルUIのみ）
    ============================== */
